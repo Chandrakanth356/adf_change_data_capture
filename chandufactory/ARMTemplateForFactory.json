@@ -97,34 +97,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/tr_etl_master_pipeline')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2025-05-07T00:00:00",
-						"timeZone": "India Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								0
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/csv_to_sqldb_cdc')]",
 			"type": "Microsoft.DataFactory/factories/adfcdcs",
 			"apiVersion": "2018-06-01",
@@ -302,28 +274,7 @@
 							{
 								"name": "project.cdc_csv",
 								"properties": {
-									"schema": [
-										{
-											"name": "Emp_id",
-											"dataType": "short"
-										},
-										{
-											"name": "Name",
-											"dataType": "string"
-										},
-										{
-											"name": "Gender",
-											"dataType": "string"
-										},
-										{
-											"name": "Salary",
-											"dataType": "integer"
-										},
-										{
-											"name": "Dept_id",
-											"dataType": "string"
-										}
-									],
+									"schema": [],
 									"dslConnectorProperties": [
 										{
 											"name": "schemaName",
@@ -339,11 +290,11 @@
 										},
 										{
 											"name": "allowSchemaDrift",
-											"value": false
+											"value": true
 										},
 										{
 											"name": "inferDriftedColumnTypes",
-											"value": false
+											"value": true
 										}
 									]
 								}
