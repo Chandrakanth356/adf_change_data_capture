@@ -125,7 +125,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/CDCcsvsource')]",
+			"name": "[concat(parameters('factoryName'), '/csv_to_sqldb_cdc')]",
 			"type": "Microsoft.DataFactory/factories/adfcdcs",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -302,7 +302,28 @@
 							{
 								"name": "project.cdc_csv",
 								"properties": {
-									"schema": [],
+									"schema": [
+										{
+											"name": "Emp_id",
+											"dataType": "short"
+										},
+										{
+											"name": "Name",
+											"dataType": "string"
+										},
+										{
+											"name": "Gender",
+											"dataType": "string"
+										},
+										{
+											"name": "Salary",
+											"dataType": "integer"
+										},
+										{
+											"name": "Dept_id",
+											"dataType": "string"
+										}
+									],
 									"dslConnectorProperties": [
 										{
 											"name": "schemaName",
@@ -318,11 +339,11 @@
 										},
 										{
 											"name": "allowSchemaDrift",
-											"value": true
+											"value": false
 										},
 										{
 											"name": "inferDriftedColumnTypes",
-											"value": true
+											"value": false
 										}
 									]
 								}
