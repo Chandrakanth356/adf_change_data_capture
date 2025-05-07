@@ -1,5 +1,5 @@
 {
-	"name": "Cdc-Csv-to-Sqldb",
+	"name": "csv_to_sqldb_cdc",
 	"properties": {
 		"SourceConnectionsInfo": [
 			{
@@ -174,28 +174,7 @@
 					{
 						"name": "project.cdc_csv",
 						"properties": {
-							"schema": [
-								{
-									"name": "Emp_id",
-									"dataType": "short"
-								},
-								{
-									"name": "Name",
-									"dataType": "string"
-								},
-								{
-									"name": "Gender",
-									"dataType": "string"
-								},
-								{
-									"name": "Salary",
-									"dataType": "integer"
-								},
-								{
-									"name": "Dept_id",
-									"dataType": "string"
-								}
-							],
+							"schema": [],
 							"dslConnectorProperties": [
 								{
 									"name": "schemaName",
@@ -211,11 +190,11 @@
 								},
 								{
 									"name": "allowSchemaDrift",
-									"value": false
+									"value": true
 								},
 								{
 									"name": "inferDriftedColumnTypes",
-									"value": false
+									"value": true
 								}
 							]
 						}
