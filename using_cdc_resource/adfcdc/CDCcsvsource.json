@@ -7,7 +7,28 @@
 					{
 						"name": "df-input/csv file",
 						"properties": {
-							"schema": [],
+							"schema": [
+								{
+									"name": "Emp_id",
+									"dataType": "short"
+								},
+								{
+									"name": "Name",
+									"dataType": "string"
+								},
+								{
+									"name": "Gender",
+									"dataType": "string"
+								},
+								{
+									"name": "Salary",
+									"dataType": "integer"
+								},
+								{
+									"name": "Dept_id",
+									"dataType": "string"
+								}
+							],
 							"dslConnectorProperties": [
 								{
 									"name": "container",
@@ -20,6 +41,14 @@
 								{
 									"name": "folderPath",
 									"value": "csv file"
+								},
+								{
+									"name": "allowSchemaDrift",
+									"value": false
+								},
+								{
+									"name": "inferDriftedColumnTypes",
+									"value": false
 								}
 							]
 						}
@@ -143,17 +172,29 @@
 			{
 				"TargetEntities": [
 					{
-						"name": "dbo.csv file",
+						"name": "project.cdc_csv",
 						"properties": {
 							"schema": [],
 							"dslConnectorProperties": [
 								{
 									"name": "schemaName",
-									"value": "dbo"
+									"value": "project"
 								},
 								{
 									"name": "tableName",
-									"value": "csv file"
+									"value": "cdc_csv"
+								},
+								{
+									"name": "defaultToUpsert",
+									"value": false
+								},
+								{
+									"name": "allowSchemaDrift",
+									"value": true
+								},
+								{
+									"name": "inferDriftedColumnTypes",
+									"value": true
 								}
 							]
 						}
@@ -220,14 +261,83 @@
 				},
 				"DataMapperMappings": [
 					{
-						"targetEntityName": "dbo.csv file",
+						"targetEntityName": "project.cdc_csv",
 						"sourceEntityName": "df-input/csv file",
 						"sourceConnectionReference": {
 							"connectionName": "gen2storagelink",
 							"type": "linkedservicetype"
 						},
 						"attributeMappingInfo": {
-							"attributeMappings": []
+							"attributeMappings": [
+								{
+									"name": "Dept_id",
+									"type": "Direct",
+									"functionName": "",
+									"attributeReference": {
+										"name": "Dept_id",
+										"entity": "df-input/csv file",
+										"entityConnectionReference": {
+											"connectionName": "gen2storagelink",
+											"type": "linkedservicetype"
+										}
+									}
+								},
+								{
+									"name": "Emp_id",
+									"type": "Direct",
+									"functionName": "",
+									"attributeReference": {
+										"name": "Emp_id",
+										"entity": "df-input/csv file",
+										"entityConnectionReference": {
+											"connectionName": "gen2storagelink",
+											"type": "linkedservicetype"
+										}
+									}
+								},
+								{
+									"name": "Gender",
+									"type": "Derived",
+									"functionName": "",
+									"expression": "case(equals(Gender, 'F'),'Female',     equals(Gender, 'M'),'Male',      'Other')",
+									"attributeReferences": [
+										{
+											"name": "Gender",
+											"entity": "df-input/csv file",
+											"entityConnectionReference": {
+												"connectionName": "gen2storagelink",
+												"type": "linkedservicetype"
+											}
+										}
+									]
+								},
+								{
+									"name": "Name",
+									"type": "Direct",
+									"functionName": "",
+									"attributeReference": {
+										"name": "Name",
+										"entity": "df-input/csv file",
+										"entityConnectionReference": {
+											"connectionName": "gen2storagelink",
+											"type": "linkedservicetype"
+										}
+									}
+								},
+								{
+									"name": "Salary",
+									"type": "Direct",
+									"functionName": "",
+									"attributeReference": {
+										"name": "Salary",
+										"entity": "df-input/csv file",
+										"entityConnectionReference": {
+											"connectionName": "gen2storagelink",
+											"type": "linkedservicetype"
+										}
+									}
+								}
+							]
 						}
 					}
 				],
@@ -241,6 +351,7 @@
 			},
 			"mode": "Microbatch"
 		},
+		"status": "Started",
 		"allowVNetOverride": false
 	}
 }
