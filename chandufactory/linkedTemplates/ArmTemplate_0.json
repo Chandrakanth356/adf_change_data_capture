@@ -125,7 +125,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/CdcSourceCsv')]",
+			"name": "[concat(parameters('factoryName'), '/CDCcsvsource')]",
 			"type": "Microsoft.DataFactory/factories/adfcdcs",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -271,21 +271,17 @@
 					{
 						"TargetEntities": [
 							{
-								"name": "df-output/cdc_output",
+								"name": "dbo.csv file",
 								"properties": {
 									"schema": [],
 									"dslConnectorProperties": [
 										{
-											"name": "container",
-											"value": "df-output"
+											"name": "schemaName",
+											"value": "dbo"
 										},
 										{
-											"name": "fileSystem",
-											"value": "df-output"
-										},
-										{
-											"name": "folderPath",
-											"value": "cdc_output"
+											"name": "tableName",
+											"value": "csv file"
 										}
 									]
 								}
@@ -293,10 +289,10 @@
 						],
 						"Connection": {
 							"linkedService": {
-								"referenceName": "gen2storagelink",
+								"referenceName": "sqllink",
 								"type": "LinkedServiceReference"
 							},
-							"linkedServiceType": "AzureBlobFS",
+							"linkedServiceType": "AzureSqlDatabase",
 							"type": "linkedservicetype",
 							"isInlineDataset": true,
 							"commonDslConnectorProperties": [
@@ -310,29 +306,49 @@
 								},
 								{
 									"name": "format",
-									"value": "delimited"
+									"value": "table"
 								},
 								{
-									"name": "columnNamesAsHeader",
+									"name": "store",
+									"value": "sqlserver"
+								},
+								{
+									"name": "databaseType",
+									"value": "databaseType"
+								},
+								{
+									"name": "database",
+									"value": "database"
+								},
+								{
+									"name": "deletable",
+									"value": false
+								},
+								{
+									"name": "insertable",
 									"value": true
 								},
 								{
-									"name": "columnDelimiter",
-									"value": ","
+									"name": "updateable",
+									"value": false
 								},
 								{
-									"name": "escapeChar",
-									"value": "\\\\"
+									"name": "upsertable",
+									"value": false
 								},
 								{
-									"name": "quoteChar",
-									"value": "\\\""
+									"name": "skipDuplicateMapInputs",
+									"value": true
+								},
+								{
+									"name": "skipDuplicateMapOutputs",
+									"value": true
 								}
 							]
 						},
 						"DataMapperMappings": [
 							{
-								"targetEntityName": "df-output/cdc_output",
+								"targetEntityName": "dbo.csv file",
 								"sourceEntityName": "df-input/csv file",
 								"sourceConnectionReference": {
 									"connectionName": "gen2storagelink",
@@ -356,7 +372,8 @@
 				"allowVNetOverride": false
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/gen2storagelink')]"
+				"[concat(variables('factoryId'), '/linkedServices/gen2storagelink')]",
+				"[concat(variables('factoryId'), '/linkedServices/sqllink')]"
 			]
 		}
 	]
