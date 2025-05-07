@@ -1,5 +1,5 @@
 {
-	"name": "CDCcsvsource",
+	"name": "Cdc-Csc-Sqldb",
 	"properties": {
 		"SourceConnectionsInfo": [
 			{
@@ -351,7 +351,7 @@
 			},
 			"mode": "Microbatch"
 		},
-		"status": "Started",
+		"status": "Stopped",
 		"allowVNetOverride": false
 	}
 }
